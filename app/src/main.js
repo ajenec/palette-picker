@@ -1,4 +1,4 @@
-//import "./style.css";
+import "./style.css";
 import palettes from "./palettes.json" assert { type: "json" };
 import { v4 as generateUUID } from "uuid";
 
