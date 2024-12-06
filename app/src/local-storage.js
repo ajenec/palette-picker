@@ -1,13 +1,14 @@
+import defaultPalettes from "./palettes.json";
+import { v4 as generateUUID } from "uuid";
+
 const setLocalStorageKey = (key, value) => {
   localStorage.setItem(key, JSON.stringify(value));
 };
 
 const getLocalStorageKey = (key) => {
-  const storedValue = localStorage.getItem(key);
   try {
-    return JSON.parse(storedValue);
+    return JSON.parse(localStorage.getItem(key));
   } catch (err) {
-    console.error("error");
     return null;
   }
 };
@@ -16,12 +17,11 @@ const setPalettes = (newPalettes) => {
   setLocalStorageKey("palettes", newPalettes);
 };
 
-const getPalettes = () => {
-  const palettes = getLocalStorageKey("palettes");
-  return palettes ? palettes : [];
+export const getPalettes = () => {
+  return getLocalStorageKey("palettes");
 };
 
-const initPalettesIfEmpty = () => {
+export const initPalettesIfEmpty = () => {
   const palettes = getPalettes();
   if (palettes.length === 0) {
     const defaultPalettes = [
@@ -45,13 +45,13 @@ const initPalettesIfEmpty = () => {
   }
 };
 
-const addPalette = (newPalettes) => {
+export const addPalette = (newPalettes) => {
   const palettes = getPalettes();
   palettes.push(newPalettes);
   setPalettes(palettes);
 };
 
-const removePalette = (paletteUuid) => {
+export const removePalette = (paletteUuid) => {
   let palettes = getPalettes();
   palettes = palettes.filter((palette) => palette.uuid !== paletteUuid);
   setPalettes(palettes);
