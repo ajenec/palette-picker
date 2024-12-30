@@ -1,0 +1,53 @@
+body {
+  font-family: "Segoe UI", Verdana, sans-serif;
+  padding: 20px;
+}
+
+h1 {
+  text-align: left;
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 0 auto;
+}
+
+label {
+  margin: 5px 0;
+}
+
+input[input="color"] {
+  margin: 10px 0;
+}
+
+fieldset {
+  margin: 10px 0;
+  padding: 10px;
+  border: none;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+section {
+  margin-top: 30px;
+  text-align: center;
+}

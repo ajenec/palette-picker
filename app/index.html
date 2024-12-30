@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./src/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Palette Picker</title>
+  </head>
+  <body>
+    <main>
+      <h1>Palette Picker</h1>
+
+      <form id="palette-form">
+        <fieldset>
+          <h2>Add a Pallette</h2>
+
+          <!--Palette title-->
+          <label for="title">Palette Name: </label>
+          <input type="text" id="title" name="title" required />
+
+          <!-- Color inputs-->
+          <label for="color1">Color #1: </label>
+          <input
+            type="color"
+            id="color1"
+            name="color1"
+            required
+            value="#000000"
+          />
+          <label for="color2">Color #2: </label>
+          <input
+            type="color"
+            id="color2"
+            name="color2"
+            required
+            value="#000000"
+          />
+          <label for="color3">Color #3: </label>
+          <input
+            type="color"
+            id="color3"
+            name="color3"
+            required
+            value="#000000"
+          />
+
+          <!-- Temperature setting-->
+          <fieldset>
+            <legend>Temperature Setting</legend>
+
+            <label for="warm"
+              ><input
+                type="radio"
+                id="warm"
+                name="temperature"
+                value="warm"
+                required
+              />Warm
+            </label>
+
+            <label for="neutral"
+              ><input
+                type="radio"
+                id="neutral"
+                name="temperature"
+                value="neutral"
+                checked
+              />
+              Neutral
+            </label>
+
+            <label for="cool"
+              ><input
+                type="radio"
+                id="cool"
+                name="temperature"
+                value="cool"
+              />Cool
+            </label>
+          </fieldset>
+          <button type="submit">Create Palette</button>
+        </fieldset>
+      </form>
+
+      <!--Section for Palettes created-->
+      <section id="palettes-list" aria-labelledby="palettes-section">
+        <ul></ul>
+      </section>
+    </main>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
