@@ -1,58 +1,52 @@
 import "./style.css";
-import { renderPalettes, clearForm } from "./dom-helpers.js";
+import { renderPalette, handleCopy, handleDelete } from "./dom-helpers";
 import {
+  setLocalStorageKey,
+  getLocalStorageKey,
+  setPalettes,
   getPalettes,
+  initPalettesIfEmpty,
   addPalette,
   removePalette,
-  initPalettesIfEmpty,
-} from "./local-storage.js";
+} from "./local-storage";
 import { v4 as generateUUID } from "uuid";
-// contains the main logic that sets up event handlers and executes initialization functions.
+import palettes from "./palettes.json";
 
-const palettesContainer = document.getElementById("palettes-list");
-const paletteForm = document.getElementById("palette-form");
-const titleInput = document.getElementById("title");
-const colorInputs = [
-  document.getElementById("color1"),
-  document.getElementById("color2"),
-  document.getElementById("color3"),
-];
-const temperatureInputs = document.getElementsByName("temperature");
+initPalettesIfEmpty(palettes);
 
-const handleDelete = (paletteUuid) => {
-  removePalette(paletteUuid);
-  renderPalettes(getPalettes(), palettesContainer, handleDelete, handleCopy);
-};
+const palette = getPalettes();
+Object.values(palette).forEach(renderPalette);
 
-const handleCopy = (color) => {
-  navigator.clipboard.writeText(color).then(() => {
-    alert("Copied hex!");
-  });
-};
+const form = document.getElementById("palette-form");
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
 
-document.addEventListener("DOMContentLoaded", () => {
-  initPalettesIfEmpty();
-  const palettes = getPalettes();
-  renderPalettes(palettes, palettesContainer, handleDelete, handleCopy);
-
-  paletteForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const title = titleInput.value;
-    const colors = colorInputs.map((input) => input.value);
-    const temperature = [...temperatureInputs].find(
-      (input) => input.checked
-    ).value;
-
+  const title = document.getElementById("title").value;
+  const color1 = document.getElementById("color1").value;
+  const color2 = document.getElementById("color3").value;
+  const color3 = document.getElementById("color3").value;
+  const temperature = form.querySelector(
+    'input[name="temperature"]:checked'
+  ).value;
+  if (title) {
     const newPalette = {
       uuid: generateUUID(),
       title,
-      colors,
+      colors: [color1, color2, color3],
       temperature,
     };
 
     addPalette(newPalette);
-    renderPalettes(getPalettes(), palettesContainer, handleDelete, handleCopy);
-    clearForm(paletteForm);
-  });
+    renderPalette(newPalette);
+    form.reset();
+  }
+});
+
+document.getElementById("palettes-list").addEventListener("click", (event) => {
+  if (event.target.classList.contains("delete-btn")) {
+    handleCopy(event);
+  } else if (event.target.classList.contains("delete-btn")) {
+    const paletteUuid = handleDelete(event);
+    removePalette(paletteUuid);
+  }
 });
